@@ -6,6 +6,9 @@ bfs:
 1. bfs遍历邻接矩阵
 2. bfs遍历邻接链表
 
+时间复杂度：O(V+E)
+空间复杂度：O(V)
+
 无权图的最短路径可以使用bfs
 """
 
@@ -82,9 +85,9 @@ def print_shortest_path_no_rec(nodes, s_key, v_key):
         v_node = v_node.p
 
     shortest_path.append(s_key)
-
     shortest_path.reverse()
     print(shortest_path)
+
     return shortest_path
 
 
