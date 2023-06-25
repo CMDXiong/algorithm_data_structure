@@ -5,17 +5,12 @@ __author__ = 'px'
 python 实现BST(二叉查找树)
 """
 
-
-class Node:
-    def __init__(self, key, left=None, right=None):
-        self.key = key
-        self.left = left
-        self.right = right
+from Tree.BaseTree import BaseTree, Node
 
 
-class BST:
+class BST(BaseTree):
     def __init__(self):
-        self.root = None
+        super(BST, self).__init__()
 
     def get(self, key):
         return self._get(self.root, key)
@@ -69,42 +64,6 @@ class BST:
                 node = node.right
         return None
 
-    def predecessor(self, node):
-        node = node.left
-        while node.right:
-            node = node.right
-        return node
-
-    def successor(self, node):
-        node = node.right
-        while node.left:
-            node = node.left
-        return node
-
-    def max(self):
-        cur = self.root
-        while cur:
-            if cur.right is Node:
-                return cur.value
-            else:
-                cur = cur.right
-
-    def min(self):
-        cur = self.root
-        while cur:
-            if cur.left is Node:
-                return cur.value
-            else:
-                cur = cur.left
-
-
-def in_order(root):
-    if root is None:
-        return
-    in_order(root.left)
-    print(root.key)
-    in_order(root.right)
-
 
 if __name__ == "__main__":
     keys = [10, 3, 15, 8, 5, 9, 11]
@@ -112,11 +71,11 @@ if __name__ == "__main__":
     root = None
     for key in keys:
         bst.insert(key)
-    in_order(bst.root)
+    bst.in_order()
 
     for key in keys:
         bst.delete(key)
         print(key, ": 删除")
-        in_order(bst.root)
+        bst.in_order()
 
 
