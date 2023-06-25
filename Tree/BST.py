@@ -7,72 +7,79 @@ python 实现BST(二叉查找树)
 
 
 class Node:
-    def __init__(self, key, value, N, left=None, right=None):
+    def __init__(self, key, left=None, right=None):
         self.key = key
-        self.value = value
         self.left = left
         self.right = right
-        self.N = N  # 以该结点为根的子树中的结点总数
 
 
 class BST:
     def __init__(self):
         self.root = None
-        pass
 
     def get(self, key):
-        # 获取键为key的值
-        return self.get_node(self.root)
+        return self._get(self.root, key)
 
-    def get_node(self, node, key):
-        # 获取以node为根结点，键为key的值
-        cur_node = node
-        while cur_node:
-            if cur_node.value > key:
-                cur_node = cur_node.left
-            elif cur_node.value == key:
-                return cur_node.value
-            elif cur_node.value < key:
-                cur_node = cur_node.right
+    def insert(self, key):
+        self.root = self._insert(self.root, key)
 
-        return None
+    def delete(self, key):
+        self.root = self._delete(self.root, key)
 
-    def put(self, key, value):
-        # 时间复杂度：最好O(lgN), 最差O(N)
-        self.root = self.put_node(self.root, key, value)
+    def _insert(self, node, key):
+        if node is None:
+            return Node(key)
 
-    def put_node(self, node, key, value):
-        # 将(key, value)插入到以node为根结点的BST中
-        if node is Node:
-            return Node(key, value, 1)
+        if key < node.key:
+            node.left = self._insert(node.left, key)
+        elif key > node.key:
+            node.right = self._insert(node.right, key)
 
-        cur = node
-        add_node = Node(key, value, 1)
-        while cur:
-            if cur.value > key:
-                cur.N += 1
-                cur = cur.left
-                if cur.left is None:
-                    cur.left = add_node
-                    break
-            elif cur.value == key:
-                cur.value = value
-                break
-            elif cur.value < key:
-                cur.N += 1
-                cur = cur.right
-                if cur.right is None:
-                    cur.right = add_node
-                    break
         return node
 
-    def size(self):
-        return self.size_node(self.root)
+    def _delete(self, root, key):
+        if root is None:
+            return root
 
-    def size_node(self, node):
-        if node is not None:
-            return node.N
-        return 0
+        if key < root.key:
+            root.left = self._delete(root.left, key)
+        elif key > root.key:
+            root.right = self._delete(root.right, key)
+        else:
+            if root.left is None and root.right is None:  # 度为0的节点
+                return None
+            elif root.left is None or root.right is None:  # 度为1的节点
+                tmp = root.left if root.left else root.right
+                return tmp
+            else:  # 度为2的节点
+                tmp = self.predecessor(root)  # 前驱结点
+                root.key = tmp.key
+                root.left = self._delete(root.left, tmp.key)
+
+        return root
+
+    def _get(self, node, key):
+        # 获取键为key的节点
+        while node:
+            if node.value > key:
+                node = node.left
+            elif node.value == key:
+                return node
+            elif node.value < key:
+                node = node.right
+        return None
+
+    def predecessor(self, node):
+        node = node.left
+        while node.right:
+            node = node.right
+        return node
+
+    def successor(self, node):
+        node = node.right
+        while node.left:
+            node = node.left
+        return node
 
     def max(self):
         cur = self.root
@@ -90,15 +97,26 @@ class BST:
             else:
                 cur = cur.left
 
-    def delete(self, key):
-        pass
 
-    def delete_min(self, key):
-        pass
+def in_order(root):
+    if root is None:
+        return
+    in_order(root.left)
+    print(root.key)
+    in_order(root.right)
 
-    def delete_max(self, key):
-        pass
 
-    def keys(self):
-        pass
+if __name__ == "__main__":
+    keys = [10, 3, 15, 8, 5, 9, 11]
+    bst = BST()
+    root = None
+    for key in keys:
+        bst.insert(key)
+    in_order(bst.root)
+
+    for key in keys:
+        bst.delete(key)
+        print(key, ": 删除")
+        in_order(bst.root)
+
 
