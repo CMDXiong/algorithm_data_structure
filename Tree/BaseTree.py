@@ -17,6 +17,21 @@ class BaseTree:
     def __init__(self):
         self.root = None
 
+    def find(self, key):
+        return self._find(self.root, key)
+
+    def _find(self, root, key):
+        if root is None:
+            return None
+
+        while root:
+            if root.key == key:
+                return root
+            elif root.key > key:
+                root = root.left
+            else:
+                root = root.right
+
     def predecessor(self, node):
         node = node.left
         while node.right:
