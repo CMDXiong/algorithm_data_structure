@@ -77,13 +77,9 @@ class AVLTree(BaseTree):
         root = self.maintain(root)
         return root
 
-
     def left_rotation(self, old_root):
         """ 左旋"""
-        print("left rorate: ", old_root.key)
-        new_root = old_root.right
-        old_root.right = new_root.left
-        new_root.left = old_root
+        new_root = super().left_rotation(old_root)
 
         self.updata_height(old_root)
         self.updata_height(new_root)
@@ -92,10 +88,7 @@ class AVLTree(BaseTree):
 
     def right_rotation(self, old_root):
         """ 右旋"""
-        print("right rorate: ", old_root.key)
-        new_root = old_root.left
-        old_root.left = new_root.right
-        new_root.right = old_root
+        new_root = super().right_rotation(old_root)
 
         self.updata_height(old_root)
         self.updata_height(new_root)
