@@ -16,7 +16,7 @@ __author__ = 'px'
 class Heap:
     def __init__(self, data=None):
         if data is None:
-            self.data = [-1] * 10
+            self.data = [None] * 10
             self.n = 0
         else:
             self.data = data
@@ -35,17 +35,20 @@ class Heap:
         self.shift_down(0)
         return res
 
-    def add(self, num):
+    def push(self, num):
         self.data[self.n] = num
         self.shift_up(self.n)
         self.n += 1
 
+    def top(self):
+        return self.data[0]
+
     def heapify(self, data):
         """ 将data数组线性堆化，即建立最小堆"""
-        n = len(data)
-        for i in range(n//2, 0, -1):
+        self.data = data
+        n = self.n = len(data)
+        for i in range(n//2, -1, -1):
             self.shift_down(i)
-        return data
 
     def heap_sort(self, data):
         """ 将data数组进行堆排序"""
@@ -109,6 +112,9 @@ class Heap:
         #     if self.data[p] > self.data[i]:
         #         self.swap(p, i)
         #         i = p
+
+    def print(self):
+        print(self.data[0:self.n])
 
 
 if __name__ == "__main__":
