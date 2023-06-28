@@ -3,18 +3,18 @@ __author__ = 'px'
 from random import randint, seed
 
 
-class UnionQuick:
+class QuickFind:
     def __init__(self, colors):
         """
         :param color: list, 下标代表第i个点, 值代表节点颜色
         """
         self.colors = colors  # list
 
-    def find(self, node):
-        """ 返回node的颜色"""
-        return self.colors[node]
+    def find(self, i):
+        """ 返回第i个节点的颜色"""
+        return self.colors[i]
 
-    def merge(self, node1, node2):
+    def union(self, node1, node2):
         """ uqf 所有color1颜色节点变成color2"""
         color1 = self.colors[node1]
         color2 = self.colors[node2]
@@ -42,7 +42,7 @@ class UnionQuick:
 if __name__ == "__main__":
     MAX_OP = 30
     colors = [randint(1, 50) for _ in range(MAX_OP)]
-    union_quick = UnionQuick(colors)
+    union_quick = QuickFind(colors)
     union_quick.print()
     nodes = input("merge: ")
     while nodes != 'q':
