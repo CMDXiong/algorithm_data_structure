@@ -48,18 +48,25 @@ class MyQueue:
         return self.count == self.size
 
     def pprint(self):
-        self.data.print()
+        tmp = []
+        for i in range(self.count):
+            pos = (i + self.head) % self.size
+            val = self.data.vector_seek(pos)
+            tmp.append(val)
+        print(tmp)
+        print('\n')
 
 
 if __name__ == "__main__":
     MAX_OP = 10
+    seed(666)
 
     queue = MyQueue(5)
 
     for i in range(MAX_OP):
         op = randint(1, 1000) % 5
         if op == 4 or op == 3:
-            print("front of queue: ".format(queue.front()))
+            print("front of queue: {}".format(queue.front()))
             queue.pop()
 
         else:
@@ -67,6 +74,6 @@ if __name__ == "__main__":
             print("push {} to queue".format(num))
             queue.push(num)
 
-    queue.pprint()
+        queue.pprint()
 
 

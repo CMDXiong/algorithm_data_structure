@@ -22,6 +22,13 @@ class Vector:
 
         return True
 
+    def update(self, pos, val):
+        if pos < 0 or pos > self.size:
+            return False
+        self.arr[pos] = val
+        self.count += 1
+        return True
+
     def delete(self, pos):
         if pos < 0 or pos >= self.count:
             return False
@@ -42,15 +49,18 @@ class Vector:
 
         return True
 
+    def vector_seek(self, pos):
+        if pos < 0 or pos > self.size:
+            return False
+        return self.arr[pos]
+
     def print(self):
         print(self.arr[0:self.count])
         print('\n')
 
 
 if __name__ == "__main__":
-
     MAX_OP = 20
-    seed(666)
 
     vector = Vector(2)
 
